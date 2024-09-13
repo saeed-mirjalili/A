@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>hi Django</h1>
+    {% if person.name == 'saeed' %}
+        <P>hi saeed</P>
+    {% else %}
+        <p>{{person.name|capfirst}}</p>
+    {%endif%}
+
+    <div class="d-flex justify-content-evenly">
+    {% for article in articles %}
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title">{{ article.title }}</h5>
+          <h6 class="card-subtitle mb-2 text-body-secondary">{{ article.created }}</h6>
+          <p class="card-text">{{ article.body }}</p>
+          <a href="{% url 'detail' article.id %}" class="card-link">Card link</a>
+          <a href="#" class="card-link">Another link</a>
+        </div>
+      </div>
+      {%endfor%}
+    </div>
+{% endblock %}
