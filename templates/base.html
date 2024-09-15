@@ -9,6 +9,12 @@
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
     />
+    {% load static %}
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'style/form.css' %}"
+    />
     <title>Document</title>
   </head>
   <body>
@@ -42,6 +48,7 @@
       </div>
     </nav>
 
-    {% include 'messages.html' %} {% block content %} {% endblock%}
+    {% include 'messages.html' %}
+    <div class="container-sm">{% block content %} {% endblock%}</div>
   </body>
 </html>

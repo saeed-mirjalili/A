@@ -1,12 +1,14 @@
 {% extends 'base.html' %} {% block content %}
-<div class="card" style="width: 18rem">
-  <div class="card-body">
-    <h5 class="card-title">{{ article.title }}</h5>
-    <h6 class="card-subtitle mb-2 text-body-secondary">
-      {{ article.created }}
-    </h6>
-    <p class="card-text">{{ article.body }}</p>
-    <a href="{% url 'delete' article.id %}" class="btn btn-danger">delete</a>
+<div class="w-50 mx-auto p-3 rounded border border-light">
+  <div class="card m-2 p-2">
+    <div class="card-body">
+      <h5 class="card-title">{{ article.title }}</h5>
+      <h6 class="card-subtitle mb-2 text-body-secondary">
+        {{ article.created }}
+      </h6>
+      <p class="card-text">{{ article.body }}</p>
+      <a href="{% url 'delete' article.id %}" class="btn btn-danger">delete</a>
+    </div>
   </div>
 </div>
 {% endblock %}
