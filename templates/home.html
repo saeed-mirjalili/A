@@ -1,8 +1,4 @@
-{% extends 'base.html' %} {% block content %} {% if person.name == 'saeed' %}
-<p>hi saeed</p>
-{% else %}
-<p>{{person.name|capfirst}}</p>
-{%endif%}
+{% extends 'base.html' %} {% block content %}
 
 <a href="/create" class="btn btn-secondary">create</a>
 

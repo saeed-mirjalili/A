@@ -57,7 +57,7 @@ def find_next_word_in_pdf(request, pdf_file, current_word):
                 found_current_word = True 
                 
                 # تقسیم متن به جملات
-                sentences = text.split('\n')  # فرض بر این است که جملات با نقطه و فاصله جدا شده‌اند
+                sentences = text.split('\n')  # فرض بر این است که جملات با اینتر جدا شده‌اند
                 
                 for i, sentence in enumerate(sentences):
                     if current_word in sentence:

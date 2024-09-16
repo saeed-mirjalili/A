@@ -20,18 +20,13 @@
   <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">Navbar</a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNavAltMarkup"
-          aria-controls="navbarNavAltMarkup"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
+        <span class="navbar-brand" href="#">
+          {% if person.name == 'saeed' %}
+          <p>hi saeed</p>
+          {% else %}
+          <p>{{person.name|capfirst}}</p>
+          {%endif%}
+        </span>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav">
             <a
@@ -40,9 +35,10 @@
               href="{% url 'home' %}"
               >Home</a
             >
-            <a class="nav-link" href="#">Features</a>
+            <!-- <a class="nav-link" href="#">Features</a>
             <a class="nav-link" href="#">Pricing</a>
             <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+            <a class="nav-link" href="#"> </a> -->
           </div>
         </div>
       </div>
