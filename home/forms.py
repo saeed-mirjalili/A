@@ -10,4 +10,4 @@ class ArticleUploadForm(forms.Form):
 class ArticleReviewForm(forms.ModelForm):
     class Meta:
         model = Article
-        fields = ['title', 'body', 'pdf']
+        fields = ['title', 'body']
