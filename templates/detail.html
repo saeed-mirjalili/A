@@ -4,9 +4,9 @@
     <div class="card-body">
       <h5 class="card-title">{{ article.title }}</h5>
       <h6 class="card-subtitle mb-2 text-body-secondary">
-        {{ article.created }}
+        <!-- {{ article.pdf.url }} -->
       </h6>
-      <p class="card-text">{{ article.body }}</p>
+      <p class="card-text">{{ next_sentences }}</p>
       <a href="{% url 'delete' article.id %}" class="btn btn-danger">delete</a>
     </div>
   </div>

@@ -14,10 +14,50 @@ def home(request):
     return render(request, 'home.html', {'person':person,'articles':articles})
 
 
-def detail(request, article_id):
-    article = Article.objects.get(id = article_id)
+
+
+def detail(request, article_id):  
+    article = Article.objects.get(id=article_id)  
+    pdf_path = article.pdf.path 
+    current_words = ['عنوان مقاله', 'موضوع','Title','title']  # لیست کلمات کلیدی
     
-    return render(request , 'detail.html' , {'article':article})
+    next_sentences = {}  # دیکشنری برای نگهداری جملات بعدی برای هر کلمه کلیدی
+    
+    if not os.path.exists(pdf_path):
+        messages.error(request, f"File not found: {pdf_path}")
+        return render(request, 'detail.html', {'article': article, 'next_sentences': next_sentences})
+
+    with open(pdf_path, 'rb') as file:   
+        pdf_reader = PdfReader(file)           
+        
+        for page_num in range(len(pdf_reader.pages)):   
+            page = pdf_reader.pages[page_num]   
+            text = page.extract_text()   
+              
+            for current_word in current_words:  # جستجو برای هر کلمه کلیدی
+                if current_word in text:   
+                    sentences = text.split('\n')  # فرض بر این است که جملات با اینتر جدا شده‌اند  
+                    
+                    for i, sentence in enumerate(sentences):  
+                        if current_word in sentence:  
+                            # اگر جمله حاوی current_word پیدا شد، جمله بعدی را نمایش می‌دهیم  
+                            if i + 1 < len(sentences):  
+                                next_sentences[current_word] = sentences[i + 1]  # ذخیره جمله بعدی
+                            else:  
+                                messages.success(request, f"No sentence found after '{current_word}'.", 'danger')  
+                            break  # پس از پیدا کردن جمله بعدی از حلقه خارج می‌شویم 
+                    
+            if current_word in next_sentences:  # اگر برای این کلمه جمله بعدی پیدا شد، از حلقه خارج می‌شویم
+                break 
+
+    # بررسی اینکه آیا هیچ کلمه‌ای پیدا نشده است
+    if not next_sentences:   
+        messages.success(request, f"None of the words {', '.join(current_words)} found in the PDF", 'danger')   
+
+    # ارسال داده‌ها به قالب 
+    return render(request, 'detail.html', {'article': article, 'next_sentences': next_sentences})
+
+
 
 
 def delete(request, article_id):
@@ -29,10 +69,9 @@ def delete(request, article_id):
 
 def create(request):
     if request.method == 'POST':
-        form = ArticleCreateForm(request.POST)
+        form = ArticleCreateForm(request.POST, request.FILES)
         if form.is_valid():
-            cd = form.cleaned_data
-            Article.objects.create(title=cd['title'], body=cd['body'], created=cd['created'])
+            Article(title = form.cleaned_data['title'], pdf = request.FILES['pdf']).save()
             messages.success(request, 'Article create successfully', 'success')
 
             return redirect('home')
@@ -40,39 +79,3 @@ def create(request):
         form = ArticleCreateForm()
     return render(request, 'create.html', {'form':form})
 
-
-
-def find_next_word_in_pdf(request, pdf_file, current_word): 
-    pdf_path = os.path.join(settings.BASE_DIR, 'home', 'pdf', pdf_file + '.pdf') 
-
-    with open(pdf_path, 'rb') as file: 
-        pdf_reader = PdfReader(file)         
-        found_current_word = False 
-
-        for page_num in range(len(pdf_reader.pages)): 
-            page = pdf_reader.pages[page_num] 
-            text = page.extract_text() 
-            
-            if current_word in text: 
-                found_current_word = True 
-                
-                # تقسیم متن به جملات
-                sentences = text.split('\n')  # فرض بر این است که جملات با اینتر جدا شده‌اند
-                
-                for i, sentence in enumerate(sentences):
-                    if current_word in sentence:
-                        # اگر جمله حاوی current_word پیدا شد، جمله بعدی را نمایش می‌دهیم
-                        if i + 1 < len(sentences):
-                            next_sentence = sentences[i + 1]
-                            messages.success(request, f'Title of your article is: {next_sentence}', 'success')
-                        else:
-                            messages.success(request, "No sentence found after the title.", 'danger')
-                        return redirect('home')
-                
-                # اگر کلمه در جمله‌ای پیدا نشد
-                messages.success(request, f"No sentence found containing '{current_word}' on page {page_num + 1}", 'danger') 
-                return redirect('home') 
-
-        if not found_current_word: 
-            messages.success(request, f"Word '{current_word}' not found in the PDF", 'danger') 
-            return redirect('home')
