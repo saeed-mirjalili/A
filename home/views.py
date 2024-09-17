@@ -2,7 +2,8 @@ import os
 from django.conf import settings
 from django.shortcuts import render, redirect
 from .models import Article
-from .forms import ArticleCreateForm
+from .forms import ArticleReviewForm
+from .forms import ArticleUploadForm
 from django.contrib import messages
 from PyPDF2 import PdfReader
 
@@ -67,15 +68,30 @@ def delete(request, article_id):
     return redirect('home')
 
 
-def create(request):
+def upload(request):
     if request.method == 'POST':
-        form = ArticleCreateForm(request.POST, request.FILES)
+        form = ArticleUploadForm(request.POST, request.FILES)
         if form.is_valid():
-            Article(title = form.cleaned_data['title'], pdf = request.FILES['pdf']).save()
-            messages.success(request, 'Article create successfully', 'success')
+            article = Article(title=form.cleaned_data['title'], pdf=request.FILES['pdf'])
+            article.save()
+
+            return redirect('review', article_id=article.id)
+    else:
+        form = ArticleUploadForm()
+        return render(request, 'upload.html', {'form':form})
+
+
+def review(request, article_id):
+    article = Article.objects.get(id=article_id)
+    if request.method == 'POST':
+        form = ArticleReviewForm(request.POST, instance=article)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'your Article created successfully', 'success')
 
             return redirect('home')
     else:
-        form = ArticleCreateForm()
-    return render(request, 'create.html', {'form':form})
+        form = ArticleReviewForm(instance=article)
+        form.initial['body'] = 'مقدار مشخص شما برای فیلد'
 
+        return render(request, 'review.html', {'form':form, 'article':article})

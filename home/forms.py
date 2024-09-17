@@ -1,7 +1,13 @@
 from django import forms
+from .models import Article
 
-class ArticleCreateForm(forms.Form):
+
+class ArticleUploadForm(forms.Form):
     title = forms.CharField()
-    # body = forms.CharField()
-    # created = forms.DateTimeField()
     pdf = forms.FileField()
+
+
+class ArticleReviewForm(forms.ModelForm):
+    class Meta:
+        model = Article
+        fields = ['title', 'body', 'pdf']
