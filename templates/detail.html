@@ -3,9 +3,9 @@
   <div class="card m-2 p-2">
     <div class="card-body">
       <h5 class="card-title">{{ article.title }}</h5>
-      <h6 class="card-subtitle mb-2 text-body-secondary">
-        <object data="{{ article.pdf.url }}" type="application/pdf"></object>
-      </h6>
+      <!-- <h6 class="card-subtitle mb-2 text-body-secondary"> -->
+      <object data="{{ article.pdf.url }}" type="application/pdf"></object>
+      <!-- </h6> -->
       <a href="{% url 'delete' article.id %}" class="btn btn-danger">delete</a>
     </div>
   </div>
