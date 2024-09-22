@@ -11,3 +11,6 @@ class ArticleReviewForm(forms.ModelForm):
     class Meta:
         model = Article
         fields = ['title', 'body']
+
+class ArticleSearchForm(forms.Form):
+    word = forms.CharField()

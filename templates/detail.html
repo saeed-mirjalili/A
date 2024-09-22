@@ -3,10 +3,17 @@
   <div class="card m-2 p-2">
     <div class="card-body">
       <h5 class="card-title">{{ article.title }}</h5>
-      <!-- <h6 class="card-subtitle mb-2 text-body-secondary"> -->
-      <object data="{{ article.pdf.url }}" type="application/pdf"></object>
-      <!-- </h6> -->
+      <h6>{{ article.body }}</h6>
+      <p>{{ next_sentences }}</p>
       <a href="{% url 'delete' article.id %}" class="btn btn-danger">delete</a>
+      
+      <div class="w-50 mx-auto p-3 rounded border border-light">
+        <form action="" method="post" class="form" enctype="multipart/form-data" novalidate>
+          {% csrf_token %} {{ form.as_p }}
+          <input type="submit" value="submit" />
+        </form>
+      </div>
+
     </div>
   </div>
 </div>
