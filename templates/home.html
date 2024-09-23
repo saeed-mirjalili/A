@@ -1,0 +1,28 @@
+{% extends 'base.html' %} {% block content %}
+
+<a href="/upload" class="btn btn-secondary">create</a>
+
+<div class="d-flex justify-content-evenly flex-wrap">
+  {% for article in articles %}
+  <div class="card m-2 p-2" style="width: 18rem">
+    <div class="card-body">
+      <h5
+        class="card-title"
+        dir="{% if article.lang == 'fa' %}rtl{% else %}ltr{% endif %}"
+      >
+        {{ article.title }}
+      </h5>
+      <h6 class="card-subtitle mb-2 text-body-secondary">
+        {{ article.created }}
+      </h6>
+      <p dir="{% if article.lang == 'fa' %}rtl{% else %}ltr{% endif %}">
+        {{ article.body }}
+      </p>
+      <a href="{% url 'detail' article.id %}" class="btn btn-primary"
+        >read more ...</a
+      >
+    </div>
+  </div>
+  {%endfor%}
+</div>
+{% endblock %}

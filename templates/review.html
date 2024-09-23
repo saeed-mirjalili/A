@@ -1,0 +1,25 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="w-50 mx-auto p-3 rounded border border-light">
+  <form
+    action=""
+    method="post"
+    class="form"
+    enctype="multipart/form-data"
+    novalidate
+  >
+    {% csrf_token %}
+    <p>{{ form.title.label }}</p>
+    <p dir="{% if lang == 'fa' %}rtl{% else %}ltr{% endif %}">
+      {{ form.title }}
+    </p>
+    <p>{{ form.body.label }}</p>
+    <p dir="{% if lang == 'fa' %}rtl{% else %}ltr{% endif %}">
+      {{ form.body }}
+    </p>
+    {{ form.lang }}
+    <button type="submit">ارسال</button>
+  </form>
+</div>
+
+{% endblock %}
