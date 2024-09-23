@@ -1,5 +1,4 @@
-# import os
-# from django.conf import settings
+
 from django.shortcuts import render, redirect
 from .models import Article
 from .forms import ArticleReviewForm
@@ -11,8 +10,7 @@ from sumy.parsers.plaintext import PlaintextParser
 from sumy.nlp.tokenizers import Tokenizer
 from sumy.summarizers.lsa import LsaSummarizer
 from langdetect import detect
-# from summa import summarizer
-# from transformers import pipeline
+
 
 
 
@@ -97,14 +95,11 @@ def review(request, article_id):
             for page in reader.pages:
                 text += page.extract_text()
         language = detect(text)
-        if language == 'fa':
-            # summarizer = pipeline("summarization", model="facebook/bart-large-cnn")
-            # form.initial['body'] = summarizer(text, max_length=50, min_length=25, do_sample=False)
-            pass
-        else :
-            parser = PlaintextParser.from_string(text, Tokenizer("english"))
-            summarizer = LsaSummarizer()
-            summary = summarizer(parser.document, 3)  # تعداد جملات خلاصه
-            form.initial['body'] = ' '.join(str(sentence) for sentence in summary)
+
+        parser = PlaintextParser.from_string(text, Tokenizer("english"))
+        summarizer = LsaSummarizer()
+        summary = summarizer(parser.document, 3)  # تعداد جملات خلاصه
+        form.initial['body'] = ' '.join(str(sentence) for sentence in summary)
+        form.initial['lang'] = language
 
         return render(request, 'review.html', {'form':form, 'article':article})

@@ -2,18 +2,25 @@
 <div class="w-50 mx-auto p-3 rounded border border-light">
   <div class="card m-2 p-2">
     <div class="card-body">
-      <h5 class="card-title">{{ article.title }}</h5>
-      <h6>{{ article.body }}</h6>
-      <p>{{ next_sentences }}</p>
+      <div dir="{% if article.lang == 'fa' %}rtl{% else %}ltr{% endif %}">
+        <h5 class="card-title">{{ article.title }}</h5>
+        <h6>{{ article.body }}</h6>
+        <p>{{ next_sentences }}</p>
+      </div>
       <a href="{% url 'delete' article.id %}" class="btn btn-danger">delete</a>
-      
+
       <div class="w-50 mx-auto p-3 rounded border border-light">
-        <form action="" method="post" class="form" enctype="multipart/form-data" novalidate>
+        <form
+          action=""
+          method="post"
+          class="form"
+          enctype="multipart/form-data"
+          novalidate
+        >
           {% csrf_token %} {{ form.as_p }}
           <input type="submit" value="submit" />
         </form>
       </div>
-
     </div>
   </div>
 </div>
