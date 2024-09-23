@@ -102,4 +102,4 @@ def review(request, article_id):
         form.initial['body'] = ' '.join(str(sentence) for sentence in summary)
         form.initial['lang'] = language
 
-        return render(request, 'review.html', {'form':form, 'article':article})
+        return render(request, 'review.html', {'form':form, 'lang': language})

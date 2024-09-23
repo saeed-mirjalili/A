@@ -10,11 +10,11 @@
   >
     {% csrf_token %}
     <p>{{ form.title.label }}</p>
-    <p dir="{% if article.lang == 'fa' %}rtl{% else %}ltr{% endif %}">
+    <p dir="{% if lang == 'fa' %}rtl{% else %}ltr{% endif %}">
       {{ form.title }}
     </p>
     <p>{{ form.body.label }}</p>
-    <p dir="{% if article.lang == 'fa' %}rtl{% else %}ltr{% endif %}">
+    <p dir="{% if lang == 'fa' %}rtl{% else %}ltr{% endif %}">
       {{ form.body }}
     </p>
     {{ form.lang }}
