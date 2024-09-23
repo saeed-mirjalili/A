@@ -21,7 +21,8 @@ input[type="file"]::file-selector-button {
   border-radius: 5px !important;
 }
 
-.form input[type="submit"] {
+.form input[type="submit"],
+.form button {
   width: 50%;
   border: none;
   margin: auto;
