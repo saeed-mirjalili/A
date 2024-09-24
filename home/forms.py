@@ -10,7 +10,6 @@ class ArticleUploadForm(forms.Form):
 class ArticleReviewForm(forms.ModelForm):
     class Meta:
         model = Article
-
         fields = ['title', 'body', 'lang']
 
     def __init__(self, *args, **kwargs):
