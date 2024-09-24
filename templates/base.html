@@ -21,10 +21,8 @@
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
       <div class="container-fluid">
         <span class="navbar-brand" href="#">
-          {% if person.name == 'saeed' %}
-          <p>hi saeed</p>
-          {% else %}
-          <p>{{person.name|capfirst}}</p>
+          {% if request.user.is_authenticated %}
+          <p>hi {{ request.user }}</p>
           {%endif%}
         </span>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
@@ -35,10 +33,12 @@
               href="{% url 'home' %}"
               >Home</a
             >
-            <!-- <a class="nav-link" href="#">Features</a>
-            <a class="nav-link" href="#">Pricing</a>
-            <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-            <a class="nav-link" href="#"> </a> -->
+            {% if request.user.is_authenticated %}
+            <a class="nav-link" href="{% url 'user_logout' %}">logout</a>
+            {% else %}
+            <a class="nav-link" href="{% url 'user_register' %}">register</a>
+            <a class="nav-link" href="{% url 'user_login' %}">login</a>
+            {%endif%}
           </div>
         </div>
       </div>

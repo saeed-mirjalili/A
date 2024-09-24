@@ -9,16 +9,20 @@
     novalidate
   >
     {% csrf_token %}
-    <p>{{ form.title.label }}</p>
-    <p dir="{% if lang == 'fa' %}rtl{% else %}ltr{% endif %}">
-      {{ form.title }}
+    <p>
+      <label>{{ form.title.label }}:</label>
+      <span dir="{% if lang == 'fa' %}rtl{% else %}ltr{% endif %}"
+        >{{ form.title }}</span
+      >
     </p>
-    <p>{{ form.body.label }}</p>
-    <p dir="{% if lang == 'fa' %}rtl{% else %}ltr{% endif %}">
-      {{ form.body }}
+    <p>
+      <label>{{ form.body.label }}:</label>
+      <span dir="{% if lang == 'fa' %}rtl{% else %}ltr{% endif %}"
+        >{{ form.body }}</span
+      >
     </p>
     {{ form.lang }}
-    <button type="submit">ارسال</button>
+    <button type="submit">submit</button>
   </form>
 </div>
 

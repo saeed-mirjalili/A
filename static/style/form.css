@@ -12,7 +12,7 @@
 .form p textarea {
   border: 1px solid #f3f3f3 !important;
   border-radius: 5px !important;
-  width: -webkit-fill-available;
+  width: 90%;
 }
 
 input[type="file"]::file-selector-button {
