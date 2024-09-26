@@ -10,20 +10,25 @@ from sumy.parsers.plaintext import PlaintextParser
 from sumy.nlp.tokenizers import Tokenizer
 from sumy.summarizers.lsa import LsaSummarizer
 from langdetect import detect
-
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404
 
 
 
 
 def home(request):
-    person = {'name':'saeed','age':'22','gender':'male'}
     articles = Article.objects.all()
 
-    return render(request, 'home.html', {'person':person,'articles':articles})
+    return render(request, 'home.html', {'articles':articles})
 
-
+@login_required
 def detail(request, article_id):  
-    article = Article.objects.get(id=article_id) 
+    article = get_object_or_404(Article, id=article_id) 
+
+    # if not article.exists():
+    #     messages.warning(request, "شما هیچ مقاله‌ای ندارید.")
+    #     return redirect('home')
+
     if request.method == 'POST':
         form = ArticleSearchForm(request.POST)
         if form.is_valid():
@@ -98,7 +103,7 @@ def review(request, article_id):
 
         parser = PlaintextParser.from_string(text, Tokenizer("english"))
         summarizer = LsaSummarizer()
-        summary = summarizer(parser.document, 3)  # تعداد جملات خلاصه
+        summary = summarizer(parser.document, 3)
         form.initial['body'] = ' '.join(str(sentence) for sentence in summary)
         form.initial['lang'] = language
 
