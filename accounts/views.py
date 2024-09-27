@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from .forms import UserRegisterForm
 from .forms import UserLoginForm
 from django.contrib import messages
+from home.models import Article
 
 def user_register(request):
 
@@ -28,7 +29,7 @@ def user_login(request):
             if user is not None:
                 login(request, user)
                 messages.success(request, 'You have successfully logged in')
-                return redirect('home')
+                return redirect('profile')
             else:
                 messages.error(request, 'username or password is wrong', 'danger')
     else:
@@ -40,3 +41,12 @@ def user_logout(request):
     logout(request)
     messages.success(request, 'you have successfully logged out', 'success')
     return redirect('home')
+
+
+def user_article(request):
+    articles = Article.objects.filter(owner__id=request.user.id)
+    if not articles.exists():
+        messages.warning(request, "you don't have any article yet")
+        return redirect('home')
+
+    return render(request, 'home.html', {'articles':articles})
