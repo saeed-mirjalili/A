@@ -27,3 +27,12 @@ input[type="file"]::file-selector-button {
   border: none;
   margin: auto;
 }
+
+.textbody {
+  padding: 0px;
+  display: -webkit-box; /* برای مرورگرهای قدیمی */
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4; /* تعداد خطوطی که می‌خواهید نمایش دهید */
+  overflow: hidden; /* مخفی کردن متن اضافی */
+  text-overflow: ellipsis; /* اضافه کردن "..." */
+}
