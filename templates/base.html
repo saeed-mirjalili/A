@@ -46,11 +46,7 @@
     </nav>
 
     {% include 'messages.html' %}
-
-    <div
-      class="container-lg d-flex justify-content-evenly flex-column align-items-center p-3"
-    >
-      {% block content %} {% endblock%}
-    </div>
+    
+    <div class="container-sm d-flex justify-content-evenly flex-column align-items-center p-3">{% block content %} {% endblock%}</div>
   </body>
 </html>

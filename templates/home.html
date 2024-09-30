@@ -1,59 +1,40 @@
 {% extends 'base.html' %} {% block content %}
 
+
+
 <div class="card mb-3">
   <div class="row g-0">
     <div class="col-md-4">
       {% load static %}
-      <img
-        src="{% static 'svg/library.svg' %}"
-        class="img-fluid rounded-start"
-        alt="..."
-      />
+      <img src="{% static 'svg/library.svg' %}" class="img-fluid rounded-start" alt="...">
     </div>
     <div class="col-md-8">
       <div class="card-body">
         <h5 class="card-title">Scientific articles</h5>
-        <p class="card-text">
-          We have provided you with a library containing +1000 scientific
-          articles in various fields
-        </p>
-        <p class="card-text">
-          <small class="text-body-secondary">Last updated 3 mins ago</small>
-        </p>
+        <p class="card-text">We have provided you with a library containing +1000 scientific articles in various fields</p>
+        <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
       </div>
     </div>
   </div>
 </div>
 
+
 <a href="/upload" class="btn btn-secondary mb-3">create</a>
+
+
+
+
+
 
 <div class="d-flex justify-content-evenly flex-wrap" style="width: inherit">
   {% for article in articles %}
-  <div class="card text-bg-light mb-3" style="max-width: 25rem">
-    <h5
-      class="card-header"
-      dir="{% if article.lang == 'fa' %}rtl{% else %}ltr{% endif %}"
-    >
-      {{ article.title }}
-    </h5>
-    <div class="card-body textbody">
-      <p
-        class="card-text"
-        dir="{% if article.lang == 'fa' %}rtl{% else %}ltr{% endif %}"
-      >
-        {{ article.body }}
-      </p>
+  <div class="card text-bg-light mb-3" style="max-width: 18rem;">
+    <h5 class="card-header" dir="{% if article.lang == 'fa' %}rtl{% else %}ltr{% endif %}">{{ article.title }}</h5>
+    <div class="card-body">
+      <p class="card-text" dir="{% if article.lang == 'fa' %}rtl{% else %}ltr{% endif %}">{{ article.body }}</p>
+      <a href="{% url 'detail' article.id %}" class="btn btn-primary">read more ...</a>
     </div>
-    <div class="d-flex card-footer text-body-secondary justify-content-evenly">
-      <div>
-        <a href="{% url 'detail' article.id %}" class="btn btn-secondary">
-          read more
-        </a>
-      </div>
-      <div>
-        <small>updated at: <br />{{ article.created }}</small>
-      </div>
-    </div>
+    <div class="card-footer"><small class="text-body-secondary">updated at: {{ article.created }}</small></div>
   </div>
   {%endfor%}
 </div>
