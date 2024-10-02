@@ -76,7 +76,7 @@ def add(request, article_id):
 
     return redirect('home')
 
-@login_required
+@login_required(login_url='user_login')
 def upload(request):
     if request.method == 'POST':
         form = ArticleUploadForm(request.POST, request.FILES)

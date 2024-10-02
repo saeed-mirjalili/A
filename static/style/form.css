@@ -1,4 +1,4 @@
-.form {
+/* .form {
   display: flex;
   flex-direction: column;
 }
@@ -30,9 +30,9 @@ input[type="file"]::file-selector-button {
 
 .textbody {
   padding: 0px;
-  display: -webkit-box; /* برای مرورگرهای قدیمی */
+  display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 4; /* تعداد خطوطی که می‌خواهید نمایش دهید */
-  overflow: hidden; /* مخفی کردن متن اضافی */
-  text-overflow: ellipsis; /* اضافه کردن "..." */
-}
+  -webkit-line-clamp: 4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+} */

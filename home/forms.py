@@ -3,8 +3,8 @@ from .models import Article
 
 
 class ArticleUploadForm(forms.Form):
-    title = forms.CharField()
-    pdf = forms.FileField()
+    title = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
+    pdf = forms.FileField(widget=forms.FileInput(attrs={'class':'form-control'}))
 
 
 class ArticleReviewForm(forms.ModelForm):
