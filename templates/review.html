@@ -10,16 +10,16 @@
   >
     {% csrf_token %}
     <p>
-      <label>{{ form.title.label }}:</label>
-      <span dir="{% if lang == 'fa' %}rtl{% else %}ltr{% endif %}"
-        >{{ form.title }}</span
-      >
+      <label> {{ form.title.label }}: </label>
+      <span dir="{% if lang == 'fa' %}rtl{% else %}ltr{% endif %}">
+        {{ form.title }}
+      </span>
     </p>
     <p>
       <label>{{ form.body.label }}:</label>
-      <span dir="{% if lang == 'fa' %}rtl{% else %}ltr{% endif %}"
-        >{{ form.body }}</span
-      >
+      <span dir="{% if lang == 'fa' %}rtl{% else %}ltr{% endif %}">
+        {{ form.body }}
+      </span>
     </p>
     {{ form.lang }}
     <button type="submit" class="btn btn-success">submit</button>

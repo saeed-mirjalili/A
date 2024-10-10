@@ -7,7 +7,6 @@ from django.contrib import messages
 from home.models import Article
 
 def user_register(request):
-
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
         if form.is_valid():
@@ -48,5 +47,4 @@ def user_article(request):
     if not articles.exists():
         messages.warning(request, "you don't have any article yet")
         return redirect('home')
-
     return render(request, 'home.html', {'articles':articles})

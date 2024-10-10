@@ -76,7 +76,7 @@ def add(request, article_id):
 
     return redirect('home')
 
-@login_required(login_url='user_login')
+@login_required()
 def upload(request):
     if request.method == 'POST':
         form = ArticleUploadForm(request.POST, request.FILES)
@@ -109,7 +109,6 @@ def review(request, article_id):
             for page in reader.pages[1:-1]:
                 text += page.extract_text()
         language = detect(text)
-
         parser = PlaintextParser.from_string(text, Tokenizer("english"))
         summarizer = LsaSummarizer()
         summary = summarizer(parser.document, 3)
