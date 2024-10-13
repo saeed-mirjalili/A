@@ -19,4 +19,8 @@ class ArticleReviewForm(forms.ModelForm):
 
 
 class ArticleSearchForm(forms.Form):
-    word = forms.CharField()
+    word = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
+
+
+class ArticleFindForm(forms.Form):
+    search = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))

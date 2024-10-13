@@ -1,38 +1,4 @@
-/* .form {
-  display: flex;
-  flex-direction: column;
+.input-group button {
+  top: 50%;
+  transform: translateY(-50%);
 }
-
-.form p {
-  display: flex;
-  justify-content: space-between;
-}
-
-.form p input,
-.form p textarea {
-  border: 1px solid #f3f3f3 !important;
-  border-radius: 5px !important;
-  width: 90%;
-}
-
-input[type="file"]::file-selector-button {
-  border: 1px solid #f3f3f3 !important;
-  padding: 0.2em 0.4em;
-  border-radius: 5px !important;
-}
-
-.form input[type="submit"],
-.form button {
-  width: 50%;
-  border: none;
-  margin: auto;
-}
-
-.textbody {
-  padding: 0px;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 4;
-  overflow: hidden;
-  text-overflow: ellipsis;
-} */

@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from .models import Article
 from .forms import ArticleReviewForm
 from .forms import ArticleUploadForm
-from .forms import ArticleSearchForm
+from .forms import ArticleSearchForm, ArticleFindForm
 from django.contrib import messages
 from PyPDF2 import PdfReader
 from sumy.parsers.plaintext import PlaintextParser
@@ -22,9 +22,11 @@ from collections import Counter
 
 def home(request):
     articles = Article.objects.all()
+    form = ArticleFindForm()
+    if request.GET.get('search'):
+        articles = articles.filter(body__contains=request.GET['search'])
 
-
-    return render(request, 'home.html', {'articles':articles})
+    return render(request, 'home.html', {'articles':articles, 'form':form })
 
 
 def detail(request, article_id):  
@@ -121,7 +123,7 @@ def review(request, article_id):
         text = ""
         for page in document:
             text += page.get_text("text")
-        cleaned_text = text.replace("\n", " ")
+        cleaned_text = text.replace("\n", ".")
 
         language = detect(cleaned_text)
         if language == 'en':
