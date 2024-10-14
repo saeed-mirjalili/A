@@ -20,13 +20,21 @@ from collections import Counter
 
 
 
-def home(request):
-    articles = Article.objects.all()
+def home(request): 
+    articles = Article.objects.order_by('-created') 
+    num = articles.count()
     form = ArticleFindForm()
-    if request.GET.get('search'):
-        articles = articles.filter(body__contains=request.GET['search'])
+    if request.GET.get('search'): 
+        articles = articles.filter(body__contains=request.GET['search']) 
+        text = 'Search results' 
+    else:
+        articles = articles[:4]
+        text = 'Latest articles' 
 
-    return render(request, 'home.html', {'articles':articles, 'form':form })
+    return render(request, 'home.html', {'articles': articles, 'form': form, 'text': text, 'num':num })
+
+
+
 
 
 def detail(request, article_id):  

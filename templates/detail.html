@@ -1,35 +1,52 @@
 {% extends 'base.html' %} {% block content %}
-<div class="w-50 mx-auto p-3 rounded border border-light">
-  <div class="card m-2 p-2">
-    <div class="card-body">
-      <div dir="{% if article.lang == 'fa' %}rtl{% else %}ltr{% endif %}">
-        <h5 class="card-title">{{ article.title }}</h5>
-        <h6>{{ article.body }}</h6>
-        <p>{{ next_sentences }}</p>
-      </div>
-      {% load static %} {% if request.user.is_authenticated %}
-      <a href="{% url 'add' article.id %}" class="btn btn-primary">add</a>
-      <a href="{% url 'remove' article.id %}" class="btn btn-danger">remove</a>
-      <a href="{{ article.pdf.url }}" class="btn btn-info">show</a>
-      {% else %}
-      <div class="alert alert-secondary" role="alert">
-        To continue, please log in to your account
-      </div>
-      {%endif%}
 
-      <div class="w-50 mx-auto p-3 rounded border border-light">
-        <form
-          action=""
-          method="post"
-          class="form"
-          enctype="multipart/form-data"
-          novalidate
-        >
-          {% csrf_token %} {{ form.word }}
-          <input type="submit" class="btn btn-success m-2" value="Search" />
-        </form>
-      </div>
+<div class="card-body">
+  <div class="d-flex w-100 justify-content-center">
+    <div class="p-2 align-self-center text-center">
+      <h1>{{ article.title }}</h1>
+      <h6>{{ article.created }}</h6>
+    </div>
+    <div class="p-2 w-25">
+      <img src="/static/svg/desk.svg" alt="..." />
     </div>
   </div>
+
+  <div dir="{% if article.lang == 'fa' %}rtl{% else %}ltr{% endif %}">
+    <h3>Summary of the article :</h3>
+    {{ article.body }}
+  </div>
+
+  {% if request.user.is_authenticated %}
+  <a href="{% url 'add' article.id %}" class="btn btn-light">add <span class="icon-plus-circle"></span></a>
+  <a href="{% url 'remove' article.id %}" class="btn btn-light">remove <span class="icon-minus-circle"></span></a>
+  <a href="{{ article.pdf.url }}" class="btn btn-light">show <span class="icon-file-text-o"></span></a>
+  {% else %}
+  <div class="alert alert-secondary" role="alert">
+    To continue, please log in to your account
+  </div>
+  {%endif%}
+
+  <div class="w-75 mx-auto p-3 rounded border border-light">
+    <p>
+      If you have a specific word in mind that you want to check for in this
+      article, you can search for that word here. This search will be conducted
+      in the main article, and we will display the sentences that contain this
+      word.
+    </p>
+
+    <div class="col-md-6">
+      <form method="post" class="d-flex" novalidate>
+        <div class="input-group">
+          {% csrf_token %} {{ form.word }}
+          <button class="btn btn-secondary btn-lg" type="submit">
+            <span class="icon-search"></span>
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <p>{{ next_sentences }}</p>
+  </div>
 </div>
+
 {% endblock %}
