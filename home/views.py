@@ -1,6 +1,7 @@
 
 from django.shortcuts import render, redirect
 from .models import Article
+from star.models import Like
 from .forms import ArticleReviewForm
 from .forms import ArticleUploadForm
 from .forms import ArticleSearchForm, ArticleFindForm
@@ -13,15 +14,14 @@ from langdetect import detect
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from nltk.tokenize import word_tokenize
-
-
+from django.db.models import Count
 import fitz
 from collections import Counter
 
 
 
 def home(request): 
-    articles = Article.objects.order_by('-created') 
+    articles = Article.objects.annotate(like_count=Count('like')).order_by('-created')
     num = articles.count()
     form = ArticleFindForm()
     if request.GET.get('search'): 
@@ -31,7 +31,7 @@ def home(request):
         articles = articles[:4]
         text = 'Latest articles' 
 
-    return render(request, 'home.html', {'articles': articles, 'form': form, 'text': text, 'num':num })
+    return render(request, 'home.html', {'articles': articles, 'form': form, 'text': text, 'num':num})
 
 
 
