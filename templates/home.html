@@ -43,14 +43,14 @@
       >
         {{ article.title }}
       </h5>
-      <div>
-        {% if true %}
+      <a href="/star/star/{{ article.id }}" class="link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
+        {% if article.like_count == 0 %}
         <span class="icon-star-o">
         {% else %}
         <span class="icon-star">
         {% endif %}
-        </span> Star<span> 1 </span>
-      </div>
+        </span> Star<span> {{ article.like_count }} </span>
+      </a>
     </div>
 
     <div class="card-body">

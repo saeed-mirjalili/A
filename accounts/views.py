@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from .forms import UserRegisterForm
-from .forms import UserLoginForm
+from .forms import UserLoginForm, ArticleFindForm
 from django.contrib import messages
 from home.models import Article
 
@@ -43,8 +43,10 @@ def user_logout(request):
 
 
 def user_article(request):
+    form = ArticleFindForm()
     articles = Article.objects.filter(owner__id=request.user.id)
+    text = 'your articles' 
     if not articles.exists():
         messages.warning(request, "you don't have any article yet")
         return redirect('home')
-    return render(request, 'home.html', {'articles':articles})
+    return render(request, 'home.html', {'articles':articles, 'text':text, 'form':form })

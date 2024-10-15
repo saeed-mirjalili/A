@@ -23,4 +23,4 @@ class ArticleSearchForm(forms.Form):
 
 
 class ArticleFindForm(forms.Form):
-    search = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
+    search = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control','placeholder':'Word search in summary of articles'}))
