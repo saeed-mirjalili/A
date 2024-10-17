@@ -9,8 +9,8 @@ def toggle(request, article_id):
     like, created = Like.objects.get_or_create(user=request.user, article=article)
 
     if created:
-        return redirect('home')
+        return redirect(request.META.get('HTTP_REFERER', 'home'))
     else:
         like.delete()
-        return redirect('home')
+        return redirect(request.META.get('HTTP_REFERER', 'home'))
 

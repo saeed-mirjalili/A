@@ -77,7 +77,7 @@ def detail(request, article_id):
 
 def remove(request, article_id):
     article = Article.objects.get(id=article_id)
-    article.owner.remove(request.user.is_authenticated)
+    article.owner.remove(request.user)
     messages.success(request, 'an article remove from your profile successfully', 'success')
 
     return redirect('home')
@@ -85,7 +85,7 @@ def remove(request, article_id):
 
 def add(request, article_id):
     article = Article.objects.get(id=article_id)
-    article.owner.add(request.user.is_authenticated)
+    article.owner.add(request.user)
     messages.success(request, 'an article add to your profile successfully', 'success')
 
     return redirect('home')
@@ -97,7 +97,7 @@ def upload(request):
         if form.is_valid():
             article = Article(title=form.cleaned_data['title'], pdf=request.FILES['pdf'])
             article.save()
-            article.owner.add(request.user.is_authenticated)
+            article.owner.add(request.user)
 
             return redirect('review', article_id=article.id)
     else:

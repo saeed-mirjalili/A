@@ -5,6 +5,7 @@ from .forms import UserRegisterForm
 from .forms import UserLoginForm, ArticleFindForm
 from django.contrib import messages
 from home.models import Article
+from django.db.models import Count
 
 def user_register(request):
     if request.method == 'POST':
@@ -44,7 +45,7 @@ def user_logout(request):
 
 def user_article(request):
     form = ArticleFindForm()
-    articles = Article.objects.filter(owner__id=request.user.id)
+    articles = Article.objects.annotate(like_count=Count('like')).filter(owner__id=request.user.id)
     text = 'your articles' 
     if not articles.exists():
         messages.warning(request, "you don't have any article yet")
