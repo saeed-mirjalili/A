@@ -52,4 +52,3 @@ def user_article(request):
         messages.warning(request, "you don't have any article yet")
         return redirect('home')
     return render(request, 'home.html', {'articles':articles, 'text':text, 'form':form })
-    return render(request, 'home.html', {'articles':articles, 'text':text, 'form':form })
